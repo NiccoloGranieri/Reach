@@ -12,7 +12,7 @@
 //==============================================================================
 MainContentComponent::MainContentComponent()
 {
-    setSize (600, 400);
+	Component::setBoundsRelative(0.2f, 0.2f, 0.75f, 0.75f);
 	controller.addListener (leapListener);
 }
 
@@ -28,7 +28,9 @@ void MainContentComponent::paint (Graphics& g)
 
     g.setFont (Font (16.0f));
     g.setColour (Colours::white);
-    g.drawText ("Hello World!", getLocalBounds(), Justification::centred, true);
+    g.drawText (currentSizeAsString, getLocalBounds(), Justification::centred, true);
+
+	
 }
 
 void MainContentComponent::resized()
@@ -36,4 +38,6 @@ void MainContentComponent::resized()
     // This is called when the MainContentComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
+
+	currentSizeAsString = String(getWidth()) + " x " + String(getHeight());
 }

@@ -25,10 +25,10 @@ public:
 
     //==============================================================================
     void initialise (const String& commandLine) override
-    {
+    { 
         // This method is where you should put your application's initialisation code..
 
-        mainWindow = new MainWindow (getApplicationName());
+        mainWindow = new MainWindow ("Reach");
     }
 
     void shutdown() override
@@ -66,6 +66,7 @@ public:
                                                                           .findColour (ResizableWindow::backgroundColourId),
                                                     DocumentWindow::allButtons)
         {
+			setResizable(true, true);
             setUsingNativeTitleBar (true);
             setContentOwned (new MainContentComponent(), true);
 
