@@ -6,4 +6,4 @@
 */
 
 #include "AppConfig.h"
-#include <juce_audio_basics/juce_audio_basics.cpp>
+#include <juce_osc/juce_osc.cpp>

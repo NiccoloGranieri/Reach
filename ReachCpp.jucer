@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="Oi0NjZ" name="ReachCpp" displaySplashScreen="0" reportAppUsage="1"
+<JUCERPROJECT id="Oi0NjZ" name="ReachCpp" displaySplashScreen="1" reportAppUsage="1"
               splashScreenColour="Dark" projectType="guiapp" version="1.0.0"
               bundleIdentifier="com.IntegraLab.ReachCpp" includeBinaryInAppConfig="1"
-              cppLanguageStandard="11" companyCopyright="Integra Lab" jucerVersion="5.2.0"
+              cppLanguageStandard="11" companyCopyright="Integra Lab" jucerVersion="5.3.0"
               companyName="Integra Lab">
   <MAINGROUP id="dja4JP" name="ReachCpp">
     <GROUP id="{16C39C49-29A4-5EA4-64BB-9F3BADD97C81}" name="Source">
@@ -14,6 +14,7 @@
             file="Source/MainComponent.cpp"/>
       <FILE id="GGE5g8" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="NHEBTx" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="ksinBY" name="Identifiers.h" compile="0" resource="0" file="Source/Identifiers.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
@@ -39,12 +40,11 @@
         <MODULEPATH id="juce_gui_basics" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_opengl" path="../../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_osc" path="C:/JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
   </EXPORTFORMATS>
   <MODULES>
-    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
@@ -52,6 +52,7 @@
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
-  <JUCEOPTIONS JUCE_WEB_BROWSER="disabled" JUCE_ENABLE_LIVE_CONSTANT_EDITOR="disabled"/>
+  <JUCEOPTIONS JUCE_WEB_BROWSER="0" JUCE_ENABLE_LIVE_CONSTANT_EDITOR="0"/>
 </JUCERPROJECT>

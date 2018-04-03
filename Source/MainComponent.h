@@ -1,7 +1,9 @@
 /*
   ==============================================================================
 
-    This file was auto-generated!
+  MainComponent.h
+  Created: 18 Jan 2018 2:04:28pm
+  Author:  Niccolò
 
   ==============================================================================
 */
@@ -12,13 +14,8 @@
 #include "Leap.h"
 #include "LeapListener.h"
 
-
-//==============================================================================
-/*
-    This component lives inside our window, and this is where you should put all
-    your controls and content.
-*/
-class MainContentComponent   : public Component
+class MainContentComponent   : public Component, 
+	                           public Timer
 {
 public:
     //==============================================================================
@@ -31,9 +28,18 @@ public:
 private:
     //==============================================================================
 	Leap::Controller controller;
-	LeapListener leapListener;
+	ScopedPointer<LeapListener> leapListener;
+
+	ValueTree rootTree;
+
+	ValueTree rightHand;
+	ValueTree leftHand;
 
 	String currentSizeAsString;
+
+	OSCSender sender;
+
+	void timerCallback() override;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };
