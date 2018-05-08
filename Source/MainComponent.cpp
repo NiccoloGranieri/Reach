@@ -9,42 +9,30 @@
 */
 
 #include "MainComponent.h"
-
-#include "Identifiers.h"
-
+#include "Leap.h"
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
 {
 	Component::setBoundsRelative(0.2f, 0.2f, 0.75f, 0.75f);
 
-	rootTree = ValueTree (IDs::REACH);
+	leapListener = new LeapListener (handList);
+	controller.addListener (*leapListener);
+	addAndMakeVisible (settings);
 
-	rightHand = ValueTree(IDs::RIGHTHAND);
-	leftHand = ValueTree(IDs::LEFTHAND);
+	sender.connect ("127.0.0.1", 5678);
 
-	rootTree.addChild(leftHand, -1, nullptr);
-	rootTree.addChild(rightHand, -1, nullptr);
+	startTimer(200);
 
-	rightHand.setProperty(IDs::palmPositionX, 0, nullptr);
-	rightHand.setProperty(IDs::palmPositionY, 0, nullptr);
-	rightHand.setProperty(IDs::palmPositionZ, 0, nullptr);
-
-	leftHand.setProperty(IDs::palmPositionX, 0, nullptr);
-	leftHand.setProperty(IDs::palmPositionY, 0, nullptr);
-	leftHand.setProperty(IDs::palmPositionZ, 0, nullptr);
-
-	leapListener = new LeapListener(rootTree);
-	controller.addListener(*leapListener);
-
-	sender.connect("127.0.0.1", 5678);
-
-	startTimerHz(200);
+	/*DBG(", timestamp: " + (String)frame.timestamp());
+	DBG(", hands: " + (String)frame.hands().count());
+	DBG(", fingers: " + (String)frame.fingers().count());
+	DBG(", testdata: " + (String)frame.hands().leftmost().palmPosition().x);*/
 }
 
 MainContentComponent::~MainContentComponent()
 {
-	controller.removeListener(*leapListener);
+	controller.removeListener (*leapListener);
 }
 
 void MainContentComponent::paint (Graphics& g)
@@ -60,14 +48,31 @@ void MainContentComponent::paint (Graphics& g)
 
 void MainContentComponent::resized()
 {
-
+	auto area = getLocalBounds();
+	settings.setBounds (area);
 }
 
 void MainContentComponent::timerCallback()
 {
-	OSCMessage message = OSCMessage("/LeftHand/palmTest");
-	message.addInt32((int)leftHand.getProperty(IDs::palmPositionX));
-	message.addInt32((int)leftHand.getProperty(IDs::palmPositionY));
-	message.addInt32((int)leftHand.getProperty(IDs::palmPositionZ));
-	sender.send(message);
+for (auto& hand : handList)
+	{
+		String handedness;
+
+		if (hand.isLeft())
+		{
+			handedness = "/Lefthand";
+		}
+
+		else
+		{
+			handedness = "/Righthand";
+		}
+
+		OSCMessage m = OSCMessage(handedness + "/palmTest");
+		m.addFloat32(hand.stabilizedPalmPosition().x);
+		m.addFloat32(hand.stabilizedPalmPosition().y);
+		m.addFloat32(hand.stabilizedPalmPosition().z);
+		sender.send(m);
+
+	}
 }

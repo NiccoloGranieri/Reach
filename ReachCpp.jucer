@@ -15,6 +15,10 @@
       <FILE id="GGE5g8" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="NHEBTx" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="ksinBY" name="Identifiers.h" compile="0" resource="0" file="Source/Identifiers.h"/>
+      <FILE id="tlVKtB" name="SettingsWindow.cpp" compile="1" resource="0"
+            file="Source/SettingsWindow.cpp"/>
+      <FILE id="pOXIqR" name="SettingsWindow.h" compile="0" resource="0"
+            file="Source/SettingsWindow.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>

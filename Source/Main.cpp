@@ -10,7 +10,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "MainComponent.h"
-
+#include "SettingsWindow.h"
 
 //==============================================================================
 class ReachApplication  : public JUCEApplication

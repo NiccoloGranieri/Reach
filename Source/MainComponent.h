@@ -13,6 +13,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Leap.h"
 #include "LeapListener.h"
+#include "SettingsWindow.h"
 
 class MainContentComponent   : public Component, 
 	                           public Timer
@@ -30,14 +31,13 @@ private:
 	Leap::Controller controller;
 	ScopedPointer<LeapListener> leapListener;
 
-	ValueTree rootTree;
-
-	ValueTree rightHand;
-	ValueTree leftHand;
+	SettingsWindow settings;
 
 	String currentSizeAsString;
 
 	OSCSender sender;
+
+	Leap::HandList handList;
 
 	void timerCallback() override;
 

@@ -15,11 +15,9 @@
 using namespace Leap;
 
 //==============================================================================
-LeapListener::LeapListener (ValueTree v)
-:	tree (v)
+LeapListener::LeapListener(HandList& h)
+: handList (h)
 {
-	leftHand = tree.getChildWithName(IDs::LEFTHAND);
-	rightHand = tree.getChildWithName(IDs::RIGHTHAND);
 }
 
 LeapListener::~LeapListener()
@@ -28,28 +26,10 @@ LeapListener::~LeapListener()
 
 void LeapListener::onConnect (const Controller& controller)
 {
-	DBG ("Connected");
-	connected = true;
 }
 
 void LeapListener::onFrame (const Controller& controller)
 {
-	DBG ("Frame available");
-
 	const Frame frame = controller.frame();
-	auto palmPosition = frame.hands().leftmost().palmPosition();
-
-	leftHand.setProperty(IDs::palmPositionX, palmPosition.x, nullptr);
-	leftHand.setProperty(IDs::palmPositionY, palmPosition.y, nullptr);
-	leftHand.setProperty(IDs::palmPositionZ, palmPosition.z, nullptr);
-	
-	
-	//DBG((int)leftHand.getPropertyAsValue(IDs::palmPosition, nullptr).getValue().getArray()->getUnchecked(0));
-	/*DBG ("Frame id: " + (String)frame.id());
-	DBG (", timestamp: " + (String)frame.timestamp());
-	DBG (", hands: " + (String)frame.hands().count());
-	DBG (", fingers: " + (String)frame.fingers().count());
-	DBG(", testdata: " + (String)frame.hands().leftmost().palmPosition().x);*/
-
-	
+	handList = frame.hands();
 }
