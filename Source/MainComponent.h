@@ -13,10 +13,10 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Leap.h"
 #include "LeapListener.h"
-#include "SettingsWindow.h"
 
 class MainContentComponent   : public Component, 
-	                           public Timer
+	                           public Timer,
+	                           public Label::Listener
 {
 public:
     //==============================================================================
@@ -30,16 +30,27 @@ private:
     //==============================================================================
 	Leap::Controller controller;
 	ScopedPointer<LeapListener> leapListener;
-
-	SettingsWindow settings;
-
-	String currentSizeAsString;
-
-	OSCSender sender;
-
 	Leap::HandList handList;
 
+	//==============================================================================
+	OSCSender sender;
+
+	//==============================================================================
 	void timerCallback() override;
+
+	//==============================================================================
+	Label ipAddress;
+	Label port;
+
+	//==============================================================================
+	String currentSizeAsString;
+
+	//==============================================================================
+	String senderIP = "127.0.0.1";
+	int senderPort = 5678;
+	int throttleTime = 200;
+
+	void labelTextChanged(Label* labelThatHasChanged) override;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

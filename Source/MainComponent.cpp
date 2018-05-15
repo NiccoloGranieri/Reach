@@ -14,15 +14,36 @@
 //==============================================================================
 MainContentComponent::MainContentComponent()
 {
-	Component::setBoundsRelative(0.2f, 0.2f, 0.75f, 0.75f);
+	Component::setBoundsRelative(0.025f, 0.025f, 0.15f, 0.15f);
 
 	leapListener = new LeapListener (handList);
 	controller.addListener (*leapListener);
-	addAndMakeVisible (settings);
 
-	sender.connect ("127.0.0.1", 5678);
+	sender.connect (senderIP, senderPort);
 
-	startTimer(200);
+	startTimer(throttleTime);
+
+	addAndMakeVisible(ipAddress);
+	addAndMakeVisible(port);
+
+	ipAddress.addListener(this);
+	port.addListener(this);
+
+	ipAddress.setFont(Font(22.0f));
+	ipAddress.setJustificationType(Justification::centred);
+	ipAddress.setColour(Label::ColourIds::backgroundColourId, Colours::white);
+	ipAddress.setColour(Label::ColourIds::textColourId, Colours::black);
+	ipAddress.setColour(Label::ColourIds::textWhenEditingColourId, Colours::black);
+	ipAddress.setEditable(true);
+	ipAddress.setText(senderIP, dontSendNotification);
+
+	port.setFont(Font(22.0f));
+	port.setJustificationType(Justification::centred);
+	port.setColour(Label::ColourIds::backgroundColourId, Colours::white);
+	port.setColour(Label::ColourIds::textColourId, Colours::black);
+	port.setColour(Label::ColourIds::textWhenEditingColourId, Colours::black);
+	port.setEditable(true);
+	port.setText((String)senderPort, dontSendNotification);
 
 	/*DBG(", timestamp: " + (String)frame.timestamp());
 	DBG(", hands: " + (String)frame.hands().count());
@@ -48,8 +69,11 @@ void MainContentComponent::paint (Graphics& g)
 
 void MainContentComponent::resized()
 {
-	auto area = getLocalBounds();
-	settings.setBounds (area);
+	auto area = getLocalBounds().reduced(proportionOfWidth(0.03), proportionOfHeight(0.03));
+	area.removeFromTop(proportionOfHeight(0.2));
+	auto labelarea = area.removeFromTop(proportionOfHeight(0.2));
+	ipAddress.setBounds(labelarea.removeFromLeft(proportionOfWidth(0.4)));
+	port.setBounds(labelarea.removeFromRight(proportionOfWidth(0.4)));
 }
 
 void MainContentComponent::timerCallback()
@@ -75,4 +99,13 @@ for (auto& hand : handList)
 		sender.send(m);
 
 	}
+}
+
+void MainContentComponent::labelTextChanged(Label* labelThatHasChanged)
+{
+	if (labelThatHasChanged == &ipAddress)
+		senderIP = labelThatHasChanged->getText();
+
+	if (labelThatHasChanged == &port)
+		senderPort = (int)labelThatHasChanged->getText().getIntValue();
 }
