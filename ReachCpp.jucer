@@ -3,7 +3,7 @@
 <JUCERPROJECT id="Oi0NjZ" name="ReachCpp" displaySplashScreen="1" reportAppUsage="1"
               splashScreenColour="Dark" projectType="guiapp" version="1.0.0"
               bundleIdentifier="com.IntegraLab.ReachCpp" includeBinaryInAppConfig="1"
-              cppLanguageStandard="11" companyCopyright="Integra Lab" jucerVersion="5.3.0"
+              cppLanguageStandard="11" companyCopyright="Integra Lab" jucerVersion="5.3.2"
               companyName="Integra Lab">
   <MAINGROUP id="dja4JP" name="ReachCpp">
     <GROUP id="{16C39C49-29A4-5EA4-64BB-9F3BADD97C81}" name="Source">
@@ -55,4 +55,7 @@
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
   <JUCEOPTIONS JUCE_WEB_BROWSER="0" JUCE_ENABLE_LIVE_CONSTANT_EDITOR="0"/>
+  <LIVE_SETTINGS>
+    <WINDOWS/>
+  </LIVE_SETTINGS>
 </JUCERPROJECT>

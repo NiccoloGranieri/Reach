@@ -184,6 +184,9 @@
     <ClCompile Include="C:\JUCE\modules\juce_core\containers\juce_PropertySet.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_core\containers\juce_SparseSet.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="C:\JUCE\modules\juce_core\containers\juce_Variant.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1150,6 +1153,9 @@
     <ClCompile Include="C:\JUCE\modules\juce_gui_basics\properties\juce_ChoicePropertyComponent.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_basics\properties\juce_MultiChoicePropertyComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="C:\JUCE\modules\juce_gui_basics\properties\juce_PropertyComponent.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1721,6 +1727,7 @@
     <ClInclude Include="C:\JUCE\modules\juce_gui_basics\properties\juce_BooleanPropertyComponent.h"/>
     <ClInclude Include="C:\JUCE\modules\juce_gui_basics\properties\juce_ButtonPropertyComponent.h"/>
     <ClInclude Include="C:\JUCE\modules\juce_gui_basics\properties\juce_ChoicePropertyComponent.h"/>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_basics\properties\juce_MultiChoicePropertyComponent.h"/>
     <ClInclude Include="C:\JUCE\modules\juce_gui_basics\properties\juce_PropertyComponent.h"/>
     <ClInclude Include="C:\JUCE\modules\juce_gui_basics\properties\juce_PropertyPanel.h"/>
     <ClInclude Include="C:\JUCE\modules\juce_gui_basics\properties\juce_SliderPropertyComponent.h"/>
