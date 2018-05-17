@@ -32,6 +32,9 @@ private:
 	ScopedPointer<LeapListener> leapListener;
 	Leap::HandList handList;
 
+	bool leftLed = false;
+	bool rightLed = false;
+
 	//==============================================================================
 	OSCSender sender;
 
@@ -41,6 +44,7 @@ private:
 	//==============================================================================
 	Label ipAddress;
 	Label port;
+	Label throttleSpeed;
 
 	//==============================================================================
 	String currentSizeAsString;

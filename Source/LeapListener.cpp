@@ -10,7 +10,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "LeapListener.h"
-#include "Identifiers.h"
 
 using namespace Leap;
 

@@ -241,6 +241,9 @@
     <ClCompile Include="..\..\Source\Main.cpp">
       <Filter>ReachCpp\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\ReachLookAndFeel.cpp">
+      <Filter>ReachCpp\Source</Filter>
+    </ClCompile>
     <ClCompile Include="C:\JUCE\modules\juce_core\containers\juce_AbstractFifo.cpp">
       <Filter>JUCE Modules\juce_core\containers</Filter>
     </ClCompile>
@@ -1569,7 +1572,7 @@
     <ClInclude Include="..\..\Source\MainComponent.h">
       <Filter>ReachCpp\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Identifiers.h">
+    <ClInclude Include="..\..\Source\ReachLookAndFeel.h">
       <Filter>ReachCpp\Source</Filter>
     </ClInclude>
     <ClInclude Include="C:\JUCE\modules\juce_core\containers\juce_AbstractFifo.h">

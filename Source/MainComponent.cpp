@@ -25,30 +25,23 @@ MainContentComponent::MainContentComponent()
 
 	addAndMakeVisible(ipAddress);
 	addAndMakeVisible(port);
+	addAndMakeVisible(throttleSpeed);
 
 	ipAddress.addListener(this);
 	port.addListener(this);
+	throttleSpeed.addListener(this);
 
 	ipAddress.setFont(Font(22.0f));
-	ipAddress.setJustificationType(Justification::centred);
-	ipAddress.setColour(Label::ColourIds::backgroundColourId, Colours::white);
-	ipAddress.setColour(Label::ColourIds::textColourId, Colours::black);
-	ipAddress.setColour(Label::ColourIds::textWhenEditingColourId, Colours::black);
 	ipAddress.setEditable(true);
 	ipAddress.setText(senderIP, dontSendNotification);
 
 	port.setFont(Font(22.0f));
-	port.setJustificationType(Justification::centred);
-	port.setColour(Label::ColourIds::backgroundColourId, Colours::white);
-	port.setColour(Label::ColourIds::textColourId, Colours::black);
-	port.setColour(Label::ColourIds::textWhenEditingColourId, Colours::black);
 	port.setEditable(true);
 	port.setText((String)senderPort, dontSendNotification);
 
-	/*DBG(", timestamp: " + (String)frame.timestamp());
-	DBG(", hands: " + (String)frame.hands().count());
-	DBG(", fingers: " + (String)frame.fingers().count());
-	DBG(", testdata: " + (String)frame.hands().leftmost().palmPosition().x);*/
+	throttleSpeed.setFont(Font(22.0f));
+	throttleSpeed.setEditable(true);
+	throttleSpeed.setText((String)throttleTime, dontSendNotification);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -65,30 +58,58 @@ void MainContentComponent::paint (Graphics& g)
     g.setColour (Colours::white);
     g.drawText (currentSizeAsString, getLocalBounds(), Justification::centred, true);
 
+	g.setColour(Colours::red);
+	g.drawEllipse(getWidth() / 4, (getHeight() / 3) * 2, getWidth() / 100, getWidth() / 100, 5);
+	g.drawEllipse((getWidth() / 4) * 3, (getHeight() / 3) * 2, getWidth() / 100, getWidth() / 100, 5);
+
+	if (leftLed)
+	{
+		g.setColour(Colours::green);
+		g.drawEllipse(getWidth() / 4, (getHeight() / 3) * 2, getWidth() / 100, getWidth() / 100, 5);
+	}
+	if (rightLed)
+	{
+		g.setColour(Colours::green);
+		g.drawEllipse((getWidth() / 4) * 3, (getHeight() / 3) * 2, getWidth() / 100, getWidth() / 100, 5);
+	}
+
 }
 
 void MainContentComponent::resized()
 {
+
 	auto area = getLocalBounds().reduced(proportionOfWidth(0.03), proportionOfHeight(0.03));
 	area.removeFromTop(proportionOfHeight(0.2));
-	auto labelarea = area.removeFromTop(proportionOfHeight(0.2));
+	auto labelarea = area.removeFromTop(proportionOfHeight(0.425));
+	auto labelarea1 = labelarea.removeFromBottom(proportionOfHeight(0.2));
+	auto spacearea = labelarea.removeFromBottom(proportionOfHeight(0.025));
+	
 	ipAddress.setBounds(labelarea.removeFromLeft(proportionOfWidth(0.4)));
 	port.setBounds(labelarea.removeFromRight(proportionOfWidth(0.4)));
+
+	labelarea1.removeFromRight(proportionOfWidth(0.27));
+	throttleSpeed.setBounds(labelarea1.removeFromRight(proportionOfWidth(0.4)));
 }
 
 void MainContentComponent::timerCallback()
 {
-for (auto& hand : handList)
+
+	leftLed = false;
+	rightLed = false;
+
+	for (auto& hand : handList)
 	{
 		String handedness;
 
 		if (hand.isLeft())
 		{
+			leftLed = true;
 			handedness = "/Lefthand";
 		}
 
 		else
 		{
+			rightLed = true;
 			handedness = "/Righthand";
 		}
 
@@ -99,6 +120,8 @@ for (auto& hand : handList)
 		sender.send(m);
 
 	}
+
+	repaint();
 }
 
 void MainContentComponent::labelTextChanged(Label* labelThatHasChanged)
@@ -108,4 +131,10 @@ void MainContentComponent::labelTextChanged(Label* labelThatHasChanged)
 
 	if (labelThatHasChanged == &port)
 		senderPort = (int)labelThatHasChanged->getText().getIntValue();
+
+	if (labelThatHasChanged == &throttleSpeed)
+	{
+		throttleTime = (int)labelThatHasChanged->getText().getIntValue();
+		startTimer(throttleTime);
+	}
 }
