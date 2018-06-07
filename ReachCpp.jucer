@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="Oi0NjZ" name="ReachCpp" splashScreenColour="Dark" projectType="guiapp"
-              version="1.0.0" bundleIdentifier="com.IntegraLab.ReachCpp" includeBinaryInAppConfig="1"
+<JUCERPROJECT id="Oi0NjZ" name="Reach" splashScreenColour="Dark" projectType="guiapp"
+              version="0.1.1" bundleIdentifier="com.IntegraLab.Reach" includeBinaryInAppConfig="1"
               cppLanguageStandard="11" companyCopyright="Integra Lab" jucerVersion="5.3.2"
               companyName="Integra Lab" reportAppUsage="0">
-  <MAINGROUP id="dja4JP" name="ReachCpp">
+  <MAINGROUP id="dja4JP" name="Reach">
     <GROUP id="{16C39C49-29A4-5EA4-64BB-9F3BADD97C81}" name="Source">
       <FILE id="I4sx1e" name="LeapListener.cpp" compile="1" resource="0"
             file="Source/LeapListener.cpp"/>
@@ -28,12 +28,12 @@
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
-                       linkTimeOptimisation="0" isDebug="1" optimisation="1" targetName="ReachCpp"
+                       linkTimeOptimisation="0" isDebug="1" optimisation="1" targetName="Reach"
                        headerPath="..\..\LeapSDK\include" libraryPath="..\..\LeapSDK\lib\x64&#10;"
                        postbuildCommand="COPY &quot;..\..\LeapSDK\lib\x64\Leap.dll&quot; &quot;$(OutDir)&quot;"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
-                       linkTimeOptimisation="1" isDebug="0" optimisation="3" targetName="ReachCpp"
+                       linkTimeOptimisation="1" isDebug="0" optimisation="3" targetName="Reach"
                        postbuildCommand="COPY &quot;..\..\LeapSDK\lib\x64\Leap.dll&quot; &quot;$(OutDir)&quot;"
                        headerPath="..\..\LeapSDK\include" defines="" libraryPath="..\..\LeapSDK\lib\x64&#10;"/>
       </CONFIGURATIONS>
