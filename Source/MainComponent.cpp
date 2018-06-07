@@ -113,12 +113,31 @@ void MainContentComponent::timerCallback()
 			handedness = "/Righthand";
 		}
 
-		OSCMessage m = OSCMessage(handedness + "/palmTest");
-		m.addFloat32(hand.stabilizedPalmPosition().x);
-		m.addFloat32(hand.stabilizedPalmPosition().y);
-		m.addFloat32(hand.stabilizedPalmPosition().z);
-		sender.send(m);
+		OSCMessage oscPalm = OSCMessage(handedness + "/palm");
+		oscPalm.addFloat32(hand.stabilizedPalmPosition().x);
+		oscPalm.addFloat32(hand.stabilizedPalmPosition().y);
+		oscPalm.addFloat32(hand.stabilizedPalmPosition().z);
+		sender.send(oscPalm);
 
+		OSCMessage oscWrist = OSCMessage(handedness + "/wrist");
+		oscWrist.addFloat32(hand.wristPosition().x);
+		oscWrist.addFloat32(hand.wristPosition().y);
+		oscWrist.addFloat32(hand.wristPosition().z);
+		sender.send(oscWrist);
+
+		for (auto& finger : hand.fingers())
+		{
+			for (auto i = 0; i <= 3; i++)
+			{
+				auto boneType = static_cast<Leap::Bone::Type>(i);
+				auto bone = finger.bone(boneType);
+				OSCMessage oscJoint = OSCMessage(handedness + "/" + (String)finger.type() + "/joint" + (String)i);
+				oscJoint.addFloat32(bone.nextJoint().x);
+				oscJoint.addFloat32(bone.nextJoint().y);
+				oscJoint.addFloat32(bone.nextJoint().z);
+				sender.send(oscJoint);
+			}
+		}
 	}
 
 	repaint();

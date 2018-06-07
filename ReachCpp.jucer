@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="Oi0NjZ" name="ReachCpp" displaySplashScreen="1" reportAppUsage="1"
-              splashScreenColour="Dark" projectType="guiapp" version="1.0.0"
-              bundleIdentifier="com.IntegraLab.ReachCpp" includeBinaryInAppConfig="1"
+<JUCERPROJECT id="Oi0NjZ" name="ReachCpp" splashScreenColour="Dark" projectType="guiapp"
+              version="1.0.0" bundleIdentifier="com.IntegraLab.ReachCpp" includeBinaryInAppConfig="1"
               cppLanguageStandard="11" companyCopyright="Integra Lab" jucerVersion="5.3.2"
-              companyName="Integra Lab">
+              companyName="Integra Lab" reportAppUsage="0">
   <MAINGROUP id="dja4JP" name="ReachCpp">
     <GROUP id="{16C39C49-29A4-5EA4-64BB-9F3BADD97C81}" name="Source">
       <FILE id="I4sx1e" name="LeapListener.cpp" compile="1" resource="0"
@@ -19,10 +18,13 @@
       <FILE id="Thbeho" name="ReachLookAndFeel.h" compile="0" resource="0"
             file="Source/ReachLookAndFeel.h"/>
     </GROUP>
+    <GROUP id="{579CDD4D-4DB4-E100-752F-F75E275DD039}" name="Assets">
+      <FILE id="xUPRKY" name="Reach Logo.png" compile="0" resource="1" file="Assets/Reach Logo.png"/>
+    </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2017 targetFolder="Builds/VisualStudio2017" windowsTargetPlatformVersion="10.0.16299.0"
-            externalLibraries="Leap.lib&#10;">
+            externalLibraries="Leap.lib&#10;" smallIcon="xUPRKY" bigIcon="xUPRKY">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"

@@ -5,6 +5,9 @@
     <Filter Include="ReachCpp\Source">
       <UniqueIdentifier>{4A184C18-03AC-5028-42F5-0B6E1D5C467B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ReachCpp\Assets">
+      <UniqueIdentifier>{5350CBD8-6AD9-5781-A90C-DF81D928A09D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ReachCpp">
       <UniqueIdentifier>{3F140AB1-B5F7-9831-1927-56ED3D87FF2A}</UniqueIdentifier>
     </Filter>
@@ -1540,6 +1543,9 @@
     <ClCompile Include="C:\JUCE\modules\juce_osc\juce_osc.cpp">
       <Filter>JUCE Modules\juce_osc</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_core.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
@@ -2841,16 +2847,25 @@
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h">
       <Filter>JUCE Library Code</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\BinaryData.h">
+      <Filter>JUCE Library Code</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
       <Filter>JUCE Library Code</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Assets\Reach Logo.png">
+      <Filter>ReachCpp\Assets</Filter>
+    </None>
     <None Include="C:\JUCE\modules\juce_graphics\image_formats\jpglib\changes to libjpeg for JUCE.txt">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </None>
     <None Include="C:\JUCE\modules\juce_graphics\image_formats\pnglib\libpng_readme.txt">
       <Filter>JUCE Modules\juce_graphics\image_formats\pnglib</Filter>
+    </None>
+    <None Include=".\icon.ico">
+      <Filter>JUCE Library Code</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
