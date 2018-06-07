@@ -101,16 +101,19 @@ void MainContentComponent::timerCallback()
 	{
 		String handedness;
 
+		char colour[5][13] = { "/TYPE_THUMB", "/TYPE_INDEX", "/TYPE_MIDDLE", "/TYPE_RING", "/TYPE_PINKY"};
+		char joint[4][9] = { "/knuckle", "/joint1", "/joint2", "/joint3"};
+
 		if (hand.isLeft())
 		{
 			leftLed = true;
-			handedness = "/Lefthand";
+			handedness = "/Left";
 		}
 
 		else
 		{
 			rightLed = true;
-			handedness = "/Righthand";
+			handedness = "/Right";
 		}
 
 		OSCMessage oscPalm = OSCMessage(handedness + "/palm");
@@ -131,7 +134,7 @@ void MainContentComponent::timerCallback()
 			{
 				auto boneType = static_cast<Leap::Bone::Type>(i);
 				auto bone = finger.bone(boneType);
-				OSCMessage oscJoint = OSCMessage(handedness + "/" + (String)finger.type() + "/joint" + (String)i);
+				OSCMessage oscJoint = OSCMessage(handedness + colour[finger.type()] + joint[i]);
 				oscJoint.addFloat32(bone.nextJoint().x);
 				oscJoint.addFloat32(bone.nextJoint().y);
 				oscJoint.addFloat32(bone.nextJoint().z);
@@ -139,6 +142,14 @@ void MainContentComponent::timerCallback()
 			}
 		}
 	}
+
+	OSCMessage presenceL = OSCMessage("/Left/presence");
+	presenceL.addInt32(leftLed);
+	sender.send(presenceL);
+
+	OSCMessage presenceR = OSCMessage("/Right/presence");
+	presenceR.addInt32(rightLed);
+	sender.send(presenceR);
 
 	repaint();
 }
