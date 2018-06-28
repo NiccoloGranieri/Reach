@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="Oi0NjZ" name="Reach" splashScreenColour="Dark" projectType="guiapp"
-              version="0.1.1" bundleIdentifier="com.IntegraLab.Reach" includeBinaryInAppConfig="1"
+              version="0.1.2" bundleIdentifier="com.IntegraLab.Reach" includeBinaryInAppConfig="1"
               cppLanguageStandard="11" companyCopyright="Integra Lab" jucerVersion="5.3.2"
               companyName="Integra Lab" reportAppUsage="0">
   <MAINGROUP id="dja4JP" name="Reach">

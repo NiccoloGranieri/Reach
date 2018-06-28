@@ -7,7 +7,7 @@
 #include <windows.h>
 
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION  0,1,1,0
+FILEVERSION  0,1,2,0
 BEGIN
   BLOCK "StringFileInfo"
   BEGIN
@@ -16,9 +16,9 @@ BEGIN
       VALUE "CompanyName",  "Integra Lab\0"
       VALUE "LegalCopyright",  "Integra Lab\0"
       VALUE "FileDescription",  "Reach\0"
-      VALUE "FileVersion",  "0.1.1\0"
+      VALUE "FileVersion",  "0.1.2\0"
       VALUE "ProductName",  "Reach\0"
-      VALUE "ProductVersion",  "0.1.1\0"
+      VALUE "ProductVersion",  "0.1.2\0"
     END
   END
 
