@@ -93,7 +93,6 @@ void MainContentComponent::resized()
 
 void MainContentComponent::timerCallback()
 {
-
 	leftLed = false;
 	rightLed = false;
 
@@ -157,7 +156,11 @@ void MainContentComponent::timerCallback()
 void MainContentComponent::labelTextChanged(Label* labelThatHasChanged)
 {
 	if (labelThatHasChanged == &ipAddress)
+	{
 		senderIP = labelThatHasChanged->getText();
+		sender.disconnect();
+		sender.connect (senderIP, senderPort);
+	}
 
 	if (labelThatHasChanged == &port)
 		senderPort = (int)labelThatHasChanged->getText().getIntValue();
