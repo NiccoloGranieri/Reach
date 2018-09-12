@@ -100,9 +100,6 @@ void MainContentComponent::timerCallback()
 	{
 		String handedness;
 
-		char colour[5][13] = { "/TYPE_THUMB", "/TYPE_INDEX", "/TYPE_MIDDLE", "/TYPE_RING", "/TYPE_PINKY"};
-		char joint[4][9] = { "/knuckle", "/joint1", "/joint2", "/joint3"};
-
 		if (hand.isLeft())
 		{
 			leftLed = true;
@@ -133,7 +130,7 @@ void MainContentComponent::timerCallback()
 			{
 				auto boneType = static_cast<Leap::Bone::Type>(i);
 				auto bone = finger.bone(boneType);
-				OSCMessage oscJoint = OSCMessage(handedness + colour[finger.type()] + joint[i]);
+				OSCMessage oscJoint = OSCMessage(String (handedness + jointTypes[finger.type()] + joints[i]));
 				oscJoint.addFloat32(bone.nextJoint().x);
 				oscJoint.addFloat32(bone.nextJoint().y);
 				oscJoint.addFloat32(bone.nextJoint().z);

@@ -56,5 +56,9 @@ private:
 
 	void labelTextChanged(Label* labelThatHasChanged) override;
 
+    //==============================================================================
+    const StringArray jointTypes = { "/TYPE_THUMB", "/TYPE_INDEX", "/TYPE_MIDDLE", "/TYPE_RING", "/TYPE_PINKY"};
+    const StringArray joints = { "/knuckle", "/joint1", "/joint2", "/joint3"};
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };
