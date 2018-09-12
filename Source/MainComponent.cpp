@@ -83,7 +83,7 @@ void MainContentComponent::resized()
 	auto labelarea = area.removeFromTop(proportionOfHeight(0.425));
 	auto labelarea1 = labelarea.removeFromBottom(proportionOfHeight(0.2));
 	auto spacearea = labelarea.removeFromBottom(proportionOfHeight(0.025));
-	
+
 	ipAddress.setBounds(labelarea.removeFromLeft(proportionOfWidth(0.4)));
 	port.setBounds(labelarea.removeFromRight(proportionOfWidth(0.4)));
 

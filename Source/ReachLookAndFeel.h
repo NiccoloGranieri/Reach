@@ -15,12 +15,12 @@
 //==============================================================================
 /*
 */
-class ReachLookAndFeel    : public LookAndFeel_V4 
+class ReachLookAndFeel    : public LookAndFeel_V4
 {
 public:
     ReachLookAndFeel();
     ~ReachLookAndFeel();
-	
+
 	void drawLabel(Graphics&, Label&) override;
 
 private:

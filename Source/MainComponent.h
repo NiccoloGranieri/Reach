@@ -14,7 +14,7 @@
 #include "Leap.h"
 #include "LeapListener.h"
 
-class MainContentComponent   : public Component, 
+class MainContentComponent   : public Component,
 	                           public Timer,
 	                           public Label::Listener
 {
