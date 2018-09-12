@@ -28,7 +28,7 @@ public:
     void initialise (const String& commandLine) override
     {
 		LookAndFeel::setDefaultLookAndFeel(&LAF);
-		
+
         mainWindow = new MainWindow ("Reach");
     }
 
