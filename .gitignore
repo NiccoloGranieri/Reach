@@ -119,3 +119,6 @@ ClientBin/
 *.pfx
 *.publishsettings
 orleans.codegen.cs
+
+# JUCE
+/JuceLibraryCode
