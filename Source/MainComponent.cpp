@@ -42,9 +42,7 @@ MainContentComponent::MainContentComponent (Leap::HandList& hl)
 	throttleSpeed.setText((String)throttleTime, dontSendNotification);
 }
 
-MainContentComponent::~MainContentComponent()
-{
-}
+MainContentComponent::~MainContentComponent() = default;
 
 void MainContentComponent::paint (Graphics& g)
 {

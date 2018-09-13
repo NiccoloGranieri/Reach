@@ -19,9 +19,7 @@ LeapListener::LeapListener(HandList& h)
 {
 }
 
-LeapListener::~LeapListener()
-{
-}
+LeapListener::~LeapListener() = default;
 
 void LeapListener::onConnect (const Controller& controller)
 {
@@ -29,6 +27,6 @@ void LeapListener::onConnect (const Controller& controller)
 
 void LeapListener::onFrame (const Controller& controller)
 {
-	const Frame frame = controller.frame();
+	const auto frame = controller.frame();
 	handList = frame.hands();
 }

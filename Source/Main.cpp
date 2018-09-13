@@ -14,25 +14,28 @@
 #include "LeapListener.h"
 
 //==============================================================================
-class ReachApplication  : public JUCEApplication
+class ReachApplication : public JUCEApplication
 {
 public:
     //==============================================================================
-    ReachApplication() 
-		: leapListener (handList)
-	{}
-	~ReachApplication() {}
+    ReachApplication()
+        : leapListener (handList)
+    {}
 
-    const String getApplicationName() override       { return ProjectInfo::projectName; }
-    const String getApplicationVersion() override    { return ProjectInfo::versionString; }
-    bool moreThanOneInstanceAllowed() override       { return true; }
+    ~ReachApplication() = default;
+
+    const String getApplicationName() override { return ProjectInfo::projectName; }
+    const String getApplicationVersion() override { return ProjectInfo::versionString; }
+    bool moreThanOneInstanceAllowed() override { return true; }
 
     //==============================================================================
-    void initialise (const String& commandLine) override
+    void initialise(const String& commandLine) override
     {
-		controller.addListener(leapListener);
+        ignoreUnused (commandLine);
 
-		LookAndFeel::setDefaultLookAndFeel(&LAF);
+        controller.addListener (leapListener);
+
+        LookAndFeel::setDefaultLookAndFeel (&LAF);
 
         mainWindow = std::make_unique<MainWindow> ("Reach", handList);
     }
@@ -41,7 +44,7 @@ public:
     {
         mainWindow = nullptr;
 
-		controller.removeListener(leapListener);
+        controller.removeListener (leapListener);
     }
 
     //==============================================================================
@@ -50,19 +53,20 @@ public:
         quit();
     }
 
-    void anotherInstanceStarted (const String& commandLine) override
-    {
-    }
+    void anotherInstanceStarted(const String& commandLine) override
+    { }
 
-    class MainWindow    : public DocumentWindow
+    class MainWindow : public DocumentWindow
     {
     public:
-        MainWindow (String name, Leap::HandList& handList)  : DocumentWindow (name,
-                                                    Desktop::getInstance().getDefaultLookAndFeel()
-                                                                          .findColour (ResizableWindow::backgroundColourId),
-                                                    DocumentWindow::allButtons)
+        MainWindow(StringRef name, Leap::HandList& handList) : DocumentWindow (name,
+                                                                               Desktop::getInstance()
+                                                                               .getDefaultLookAndFeel()
+                                                                               .findColour (
+                                                                                   ResizableWindow::backgroundColourId),
+                                                                               DocumentWindow::allButtons)
         {
-			setResizable(true, true);
+            setResizable (true, true);
             setUsingNativeTitleBar (true);
             setContentOwned (new MainContentComponent (handList), true);
 
@@ -80,13 +84,13 @@ public:
     };
 
 private:
-	Leap::Controller controller;
-	Leap::HandList handList;
-	LeapListener leapListener;
+    Leap::Controller controller;
+    Leap::HandList handList;
+    LeapListener leapListener;
 
     std::unique_ptr<MainWindow> mainWindow;
 
-	ReachLookAndFeel LAF;
+    ReachLookAndFeel LAF;
 };
 
 //==============================================================================
