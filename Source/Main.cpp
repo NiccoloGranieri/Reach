@@ -11,13 +11,16 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "MainComponent.h"
 #include "ReachLookAndFeel.h"
+#include "LeapListener.h"
 
 //==============================================================================
 class ReachApplication  : public JUCEApplication
 {
 public:
     //==============================================================================
-    ReachApplication() {}
+    ReachApplication() 
+		: leapListener (handList)
+	{}
 	~ReachApplication() {}
 
     const String getApplicationName() override       { return ProjectInfo::projectName; }
@@ -27,14 +30,18 @@ public:
     //==============================================================================
     void initialise (const String& commandLine) override
     {
+		controller.addListener(leapListener);
+
 		LookAndFeel::setDefaultLookAndFeel(&LAF);
 
-        mainWindow = std::make_unique<MainWindow> ("Reach");
+        mainWindow = std::make_unique<MainWindow> ("Reach", handList);
     }
 
     void shutdown() override
     {
         mainWindow = nullptr;
+
+		controller.removeListener(leapListener);
     }
 
     //==============================================================================
@@ -50,14 +57,14 @@ public:
     class MainWindow    : public DocumentWindow
     {
     public:
-        MainWindow (String name)  : DocumentWindow (name,
+        MainWindow (String name, Leap::HandList& handList)  : DocumentWindow (name,
                                                     Desktop::getInstance().getDefaultLookAndFeel()
                                                                           .findColour (ResizableWindow::backgroundColourId),
                                                     DocumentWindow::allButtons)
         {
 			setResizable(true, true);
             setUsingNativeTitleBar (true);
-            setContentOwned (new MainContentComponent(), true);
+            setContentOwned (new MainContentComponent (handList), true);
 
             centreWithSize (getWidth(), getHeight());
             setVisible (true);
@@ -73,6 +80,10 @@ public:
     };
 
 private:
+	Leap::Controller controller;
+	Leap::HandList handList;
+	LeapListener leapListener;
+
     std::unique_ptr<MainWindow> mainWindow;
 
 	ReachLookAndFeel LAF;

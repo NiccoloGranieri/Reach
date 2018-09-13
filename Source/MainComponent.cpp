@@ -12,12 +12,10 @@
 #include "Leap.h"
 
 //==============================================================================
-MainContentComponent::MainContentComponent()
+MainContentComponent::MainContentComponent (Leap::HandList& hl)
+	: handList (hl)
 {
 	Component::setBoundsRelative(0.025f, 0.025f, 0.15f, 0.15f);
-
-	leapListener = std::make_unique<LeapListener> (handList);
-	controller.addListener (*leapListener);
 
 	sender.connect (senderIP, senderPort);
 
@@ -46,7 +44,6 @@ MainContentComponent::MainContentComponent()
 
 MainContentComponent::~MainContentComponent()
 {
-	controller.removeListener (*leapListener);
 }
 
 void MainContentComponent::paint (Graphics& g)

@@ -12,7 +12,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Leap.h"
-#include "LeapListener.h"
 
 class MainContentComponent   : public Component,
 	                           public Timer,
@@ -20,18 +19,17 @@ class MainContentComponent   : public Component,
 {
 public:
     //==============================================================================
-    MainContentComponent();
+    MainContentComponent (Leap::HandList& hl);
     ~MainContentComponent();
 
     void paint (Graphics&) override;
     void resized() override;
 
 private:
-    //==============================================================================
-	Leap::Controller controller;
-	std::unique_ptr<LeapListener> leapListener;
-	Leap::HandList handList;
+	//==============================================================================
+	Leap::HandList& handList;
 
+    //==============================================================================
 	bool leftLed = false;
 	bool rightLed = false;
 
