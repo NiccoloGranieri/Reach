@@ -29,7 +29,7 @@ public:
 private:
     //==============================================================================
 	Leap::Controller controller;
-	ScopedPointer<LeapListener> leapListener;
+	std::unique_ptr<LeapListener> leapListener;
 	Leap::HandList handList;
 
 	bool leftLed = false;

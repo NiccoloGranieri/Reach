@@ -16,7 +16,7 @@ MainContentComponent::MainContentComponent()
 {
 	Component::setBoundsRelative(0.025f, 0.025f, 0.15f, 0.15f);
 
-	leapListener = new LeapListener (handList);
+	leapListener = std::make_unique<LeapListener> (handList);
 	controller.addListener (*leapListener);
 
 	sender.connect (senderIP, senderPort);
@@ -77,7 +77,6 @@ void MainContentComponent::paint (Graphics& g)
 
 void MainContentComponent::resized()
 {
-
 	auto area = getLocalBounds().reduced(proportionOfWidth(0.03), proportionOfHeight(0.03));
 	area.removeFromTop(proportionOfHeight(0.2));
 	auto labelarea = area.removeFromTop(proportionOfHeight(0.425));

@@ -29,7 +29,7 @@ public:
     {
 		LookAndFeel::setDefaultLookAndFeel(&LAF);
 
-        mainWindow = new MainWindow ("Reach");
+        mainWindow = std::make_unique<MainWindow> ("Reach");
     }
 
     void shutdown() override
@@ -73,7 +73,7 @@ public:
     };
 
 private:
-    ScopedPointer<MainWindow> mainWindow;
+    std::unique_ptr<MainWindow> mainWindow;
 
 	ReachLookAndFeel LAF;
 };
