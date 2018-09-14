@@ -13,7 +13,7 @@
 //==============================================================================
 MainContentComponent::MainContentComponent ()
 {
-	Component::setBoundsRelative(0.025f, 0.025f, 0.15f, 0.15f);
+	setBoundsRelative(0.025f, 0.025f, 0.15f, 0.15f);
 
 	sender.connect (senderIP, senderPort);
 
