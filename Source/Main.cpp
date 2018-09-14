@@ -3,7 +3,7 @@
 
   Main.cpp
   Created: 18 Jan 2018 2:04:28pm
-  Author:  Niccolò
+  Author:  NiccolÃ²
 
   ==============================================================================
 */
@@ -25,7 +25,7 @@ public:
     bool moreThanOneInstanceAllowed() override { return true; }
 
     //==============================================================================
-    void initialise(const String& commandLine) override
+    void initialise (const String& commandLine) override
     {
         ignoreUnused (commandLine);
 

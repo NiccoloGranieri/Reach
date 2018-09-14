@@ -6,10 +6,12 @@
               companyName="Integra Lab" reportAppUsage="0" headerPath="../../JuceLibraryCode/&#10;../../LeapSDK/include">
   <MAINGROUP id="dja4JP" name="Reach">
     <GROUP id="{16C39C49-29A4-5EA4-64BB-9F3BADD97C81}" name="Source">
+      <FILE id="NHEBTx" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="IZnqVN" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="GGE5g8" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
-      <FILE id="NHEBTx" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="wGdwsV" name="LeapLogger.cpp" compile="1" resource="0" file="Source/LeapLogger.cpp"/>
+      <FILE id="sgHzeb" name="LeapLogger.h" compile="0" resource="0" file="Source/LeapLogger.h"/>
       <FILE id="WpyIkB" name="ReachLookAndFeel.cpp" compile="1" resource="0"
             file="Source/ReachLookAndFeel.cpp"/>
       <FILE id="Thbeho" name="ReachLookAndFeel.h" compile="0" resource="0"
