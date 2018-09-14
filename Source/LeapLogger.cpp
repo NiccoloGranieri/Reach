@@ -2,10 +2,11 @@
 #include "LeapLogger.h"
 
 //==============================================================================
-LeapLogger::LeapLogger (File& logFile)
-: logger (logFile, {})
+LeapLogger::LeapLogger ()
 {
-	logFrameData.ensureStorageAllocated(200);
+	createNewLogFile ();
+
+	startTimer (5);
 }
 
 LeapLogger::~LeapLogger()
@@ -14,10 +15,51 @@ LeapLogger::~LeapLogger()
 }
 
 //==============================================================================
+void LeapLogger::createNewLogFile()
+{
+	DBG("CREATING FILE");
+	const auto logFilename = String(String(ProjectInfo::projectName)
+		+ "_Session" + String (currentSessionNumber) + "_Log_"
+		+ Time::getCurrentTime().formatted("%d-%m-%Y_%H-%M-%S"));
+
+	const auto logExtension = String(".csv");
+
+	auto logFile = File::getSpecialLocation(File::SpecialLocationType::userDesktopDirectory)
+		.getChildFile(logFilename + logExtension);
+
+	Logger::setCurrentLogger(nullptr);
+	logger.reset(new FileLogger(logFile, {}));
+	Logger::setCurrentLogger(logger.get());
+
+	logger->logMessage(ProjectInfo::projectName + String(" Data Log"));
+	logger->logMessage({});
+	logger->logMessage(dataNames);
+	logger->logMessage({});
+
+	logFrameData.ensureStorageAllocated(200);
+
+	++currentSessionNumber;
+	DBG(currentSessionNumber);
+	DBG(logFilename);
+}
+
+//==============================================================================
 void LeapLogger::hiResTimerCallback()
 {
 	if (! controller.isConnected())
+	{
+		DBG("DISCONNECT");
+		shouldStartNewSession = true;
 		return;
+	}
+
+    if (shouldStartNewSession && controller.isConnected())
+    {
+		DBG("NEW FILE INSIDE CALLBACK");
+		createNewLogFile();
+		shouldStartNewSession = false;
+		return;
+    }
 
 	const auto& frame = controller.frame();
 
@@ -59,7 +101,7 @@ void LeapLogger::hiResTimerCallback()
 		}
 	}
 
-	logger.writeToLog (logFrameData.joinIntoString (","));
+	logger->logMessage (logFrameData.joinIntoString (","));
 
 	lastFrameId = frame.id();
 }
