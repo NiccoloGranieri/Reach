@@ -13,8 +13,6 @@
 //==============================================================================
 MainContentComponent::MainContentComponent ()
 {
-	DBG (hands.getReferenceCount());
-
 	Component::setBoundsRelative(0.025f, 0.025f, 0.15f, 0.15f);
 
 	sender.connect (senderIP, senderPort);
@@ -87,11 +85,16 @@ void MainContentComponent::resized()
 
 void MainContentComponent::timerCallback()
 {
-    /*
+	if (! controller.get().isConnected())
+		return;
+
+	const auto& frame = controller.get().frame();
+	const auto& hands = frame.hands();
+
 	leftLed = false;
 	rightLed = false;
 
-	for (auto& hand : handList)
+	for (auto& hand : hands)
 	{
 		String handedness;
 
@@ -125,11 +128,10 @@ void MainContentComponent::timerCallback()
 			{
 				auto boneType = static_cast<Leap::Bone::Type>(i);
 				auto bone = finger.bone(boneType);
-				OSCMessage oscJoint = OSCMessage(String (handedness + jointTypes[finger.type()] + joints[i]));
+				OSCMessage oscJoint = OSCMessage(String(handedness + jointTypes[finger.type()] + joints[i]));
 				oscJoint.addFloat32(bone.nextJoint().x);
 				oscJoint.addFloat32(bone.nextJoint().y);
 				oscJoint.addFloat32(bone.nextJoint().z);
-				sender.send(oscJoint);
 			}
 		}
 	}
@@ -143,7 +145,6 @@ void MainContentComponent::timerCallback()
 	sender.send(presenceR);
 
 	repaint();
-    */
 }
 
 void MainContentComponent::labelTextChanged(Label* labelThatHasChanged)

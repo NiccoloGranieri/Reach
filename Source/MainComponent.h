@@ -10,8 +10,8 @@
 
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
-#include "LeapHands.h"
+#include "JuceHeader.h"
+#include "Leap.h"
 
 class MainContentComponent   : public Component,
 	                           public Timer,
@@ -27,7 +27,7 @@ public:
 
 private:
 	//==============================================================================
-	SharedResourcePointer<LeapHands> hands;
+	SharedResourcePointer<Leap::Controller> controller;
 
     //==============================================================================
 	bool leftLed = false;

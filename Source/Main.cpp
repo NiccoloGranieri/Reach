@@ -10,7 +10,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "ReachLookAndFeel.h"
-#include "LeapListener.h";
 #include "MainComponent.h"
 
 //==============================================================================
@@ -30,8 +29,6 @@ public:
     {
         ignoreUnused (commandLine);
 
-        controller.addListener (leapListener);
-
         LookAndFeel::setDefaultLookAndFeel (&LAF);
 
         mainWindow = std::make_unique<MainWindow> ("Reach");
@@ -40,8 +37,6 @@ public:
     void shutdown() override
     {
         mainWindow = nullptr;
-
-        controller.removeListener (leapListener);
     }
 
     //==============================================================================
@@ -56,12 +51,9 @@ public:
     class MainWindow : public DocumentWindow
     {
     public:
-        MainWindow(StringRef name) : DocumentWindow (name,
-                                                                               Desktop::getInstance()
-                                                                               .getDefaultLookAndFeel()
-                                                                               .findColour (
-                                                                                   ResizableWindow::backgroundColourId),
-                                                                               DocumentWindow::allButtons)
+        MainWindow(StringRef name) : DocumentWindow (name, Desktop::getInstance().getDefaultLookAndFeel()
+                                                                                 .findColour (ResizableWindow::backgroundColourId),
+                                                                                              DocumentWindow::allButtons)
         {
             setResizable (true, true);
             setUsingNativeTitleBar (true);
@@ -81,8 +73,6 @@ public:
     };
 
 private:
-    Leap::Controller controller;
-    LeapListener leapListener;
 
     std::unique_ptr<MainWindow> mainWindow;
 
