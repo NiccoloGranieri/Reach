@@ -5,10 +5,7 @@
 LeapLogger::LeapLogger (File& logFile)
 : logger (logFile, {})
 {
-	logger.writeToLog (ProjectInfo::projectName + String(" Data Log"));
-	logger.writeToLog (newLine);
-	logger.writeToLog (String("////=============================================================================="));
-	logger.writeToLog(newLine);
+	logFrameData.ensureStorageAllocated(200);
 }
 
 LeapLogger::~LeapLogger()
@@ -20,9 +17,7 @@ LeapLogger::~LeapLogger()
 void LeapLogger::hiResTimerCallback()
 {
 	if (! controller.isConnected())
-	{
 		return;
-	}
 
 	const auto& frame = controller.frame();
 
@@ -31,22 +26,25 @@ void LeapLogger::hiResTimerCallback()
 
 	const auto& hands = frame.hands();
 
+	if (hands.isEmpty())
+		return;
+
+	logFrameData.clearQuick();
+
 	for (auto& hand : hands)
 	{
-		writeToLog(hand.toString());
-
 		if (hand.isLeft())
-			writeToLog ("Left");
+			logFrameData.add("Left");
 		else
-			writeToLog("Right");
+			logFrameData.add("Right");
 
-	    writeToLog(static_cast<String> (hand.stabilizedPalmPosition().x));
-		writeToLog(static_cast<String> (hand.stabilizedPalmPosition().y));
-		writeToLog(static_cast<String> (hand.stabilizedPalmPosition().z));
+		logFrameData.add(static_cast<String> (hand.stabilizedPalmPosition().x));
+		logFrameData.add(static_cast<String> (hand.stabilizedPalmPosition().y));
+		logFrameData.add(static_cast<String> (hand.stabilizedPalmPosition().z));
 
-		writeToLog(static_cast<String> (hand.wristPosition().x));
-		writeToLog(static_cast<String> (hand.wristPosition().y));
-		writeToLog(static_cast<String> (hand.wristPosition().z));
+		logFrameData.add(static_cast<String> (hand.wristPosition().x));
+		logFrameData.add(static_cast<String> (hand.wristPosition().y));
+		logFrameData.add(static_cast<String> (hand.wristPosition().z));
 
 		for (auto& finger : hand.fingers())
 		{
@@ -54,21 +52,14 @@ void LeapLogger::hiResTimerCallback()
 			{
 				const auto& boneType = static_cast<Leap::Bone::Type> (i);
 				const auto& bone = finger.bone (boneType);
-				writeToLog(static_cast<String> (bone.nextJoint().x));
-				writeToLog(static_cast<String> (bone.nextJoint().y));
-				writeToLog(static_cast<String> (bone.nextJoint().z));
+				logFrameData.add(static_cast<String> (bone.nextJoint().x));
+				logFrameData.add(static_cast<String> (bone.nextJoint().y));
+				logFrameData.add(static_cast<String> (bone.nextJoint().z));
 			}
 		}
 	}
 
-	logger.writeToLog (newLine);
+	logger.writeToLog (logFrameData.joinIntoString (","));
 
 	lastFrameId = frame.id();
-}
-
-//==============================================================================
-void LeapLogger::writeToLog (StringRef content)
-{
-	logger.writeToLog(content);
-	logger.writeToLog(",");
 }

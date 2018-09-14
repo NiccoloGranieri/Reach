@@ -19,11 +19,12 @@ public:
 	{ startTimer(5); }
 
 	//==========================================================================
-	void setLogFile (File logFile);
+	void setLogFile (File logFolder);
 
 private:
 	//==========================================================================
 	FileLogger logger;
+	StringArray logFrameData;
 
 	//==========================================================================
 	Leap::Controller controller;
@@ -32,9 +33,6 @@ private:
 	//==========================================================================
 	const StringArray jointTypes = { "/TYPE_THUMB", "/TYPE_INDEX", "/TYPE_MIDDLE", "/TYPE_RING", "/TYPE_PINKY" };
 	const StringArray joints = { "/knuckle", "/joint1", "/joint2", "/joint3" };
-
-	//==========================================================================
-	void writeToLog (StringRef content);
 
 	//==========================================================================
     void hiResTimerCallback() override;
