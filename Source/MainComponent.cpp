@@ -85,10 +85,10 @@ void MainContentComponent::resized()
 
 void MainContentComponent::timerCallback()
 {
-	if (! controller.get().isConnected())
+	if (! controller.isConnected())
 		return;
 
-	const auto& frame = controller.get().frame();
+	const auto& frame = controller.frame();
 	const auto& hands = frame.hands();
 
 	leftLed = false;

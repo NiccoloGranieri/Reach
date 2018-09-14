@@ -27,7 +27,7 @@ public:
 
 private:
 	//==============================================================================
-	SharedResourcePointer<Leap::Controller> controller;
+	Leap::Controller controller;
 
     //==============================================================================
 	bool leftLed = false;
