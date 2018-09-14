@@ -1,17 +1,43 @@
 #pragma once
 
 #include "JuceHeader.h"
+#include "Leap.h"
 
 //==============================================================================
-class LeapLogger
+class LeapLogger : public HighResolutionTimer
 {
 public:
 	//==========================================================================
-    LeapLogger();
+    explicit LeapLogger (File& logFile);
     ~LeapLogger();
+
+	//==========================================================================
+	FileLogger& getLogger() noexcept
+	{ return logger; }
+
+    void startLogger()
+	{ startTimer(5); }
+
+	//==========================================================================
+	void setLogFile (File logFile);
 
 private:
 	//==========================================================================
+	FileLogger logger;
+
+	//==========================================================================
+	Leap::Controller controller;
+	int lastFrameId = -1;
+
+	//==========================================================================
+	const StringArray jointTypes = { "/TYPE_THUMB", "/TYPE_INDEX", "/TYPE_MIDDLE", "/TYPE_RING", "/TYPE_PINKY" };
+	const StringArray joints = { "/knuckle", "/joint1", "/joint2", "/joint3" };
+
+	//==========================================================================
+	void writeToLog (StringRef content);
+
+	//==========================================================================
+    void hiResTimerCallback() override;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (LeapLogger)
 };

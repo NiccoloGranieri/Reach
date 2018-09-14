@@ -11,6 +11,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "ReachLookAndFeel.h"
 #include "MainComponent.h"
+#include "LeapLogger.h"
 
 //==============================================================================
 class ReachApplication : public JUCEApplication
@@ -31,12 +32,25 @@ public:
 
         LookAndFeel::setDefaultLookAndFeel (&LAF);
 
-        mainWindow = std::make_unique<MainWindow> ("Reach");
+		mainWindow = std::make_unique<MainWindow>("Reach");	
+
+		auto desktopFile = File::getSpecialLocation (File::SpecialLocationType::userDesktopDirectory)
+				                       .getChildFile(getApplicationName() + String("Log.csv"));
+        
+		logger = std::make_unique<LeapLogger> (desktopFile);
+
+		Logger::setCurrentLogger(&logger->getLogger());
+
+		logger->startLogger();
     }
 
     void shutdown() override
     {
         mainWindow = nullptr;
+
+		Logger::setCurrentLogger(nullptr);
+
+		logger.reset();
     }
 
     //==============================================================================
@@ -75,6 +89,7 @@ public:
 private:
 
     std::unique_ptr<MainWindow> mainWindow;
+	std::unique_ptr<LeapLogger> logger;
 
     ReachLookAndFeel LAF;
 };
