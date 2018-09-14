@@ -9,12 +9,12 @@
 */
 
 #include "MainComponent.h"
-#include "Leap.h"
 
 //==============================================================================
-MainContentComponent::MainContentComponent (Leap::HandList& hl)
-	: handList (hl)
+MainContentComponent::MainContentComponent ()
 {
+	DBG (hands.getReferenceCount());
+
 	Component::setBoundsRelative(0.025f, 0.025f, 0.15f, 0.15f);
 
 	sender.connect (senderIP, senderPort);
@@ -87,6 +87,7 @@ void MainContentComponent::resized()
 
 void MainContentComponent::timerCallback()
 {
+    /*
 	leftLed = false;
 	rightLed = false;
 
@@ -142,6 +143,7 @@ void MainContentComponent::timerCallback()
 	sender.send(presenceR);
 
 	repaint();
+    */
 }
 
 void MainContentComponent::labelTextChanged(Label* labelThatHasChanged)

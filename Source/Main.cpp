@@ -9,19 +9,16 @@
 */
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MainComponent.h"
 #include "ReachLookAndFeel.h"
-#include "LeapListener.h"
+#include "LeapListener.h";
+#include "MainComponent.h"
 
 //==============================================================================
 class ReachApplication : public JUCEApplication
 {
 public:
     //==============================================================================
-    ReachApplication()
-        : leapListener (handList)
-    {}
-
+	ReachApplication() = default;
     ~ReachApplication() = default;
 
     const String getApplicationName() override { return ProjectInfo::projectName; }
@@ -37,7 +34,7 @@ public:
 
         LookAndFeel::setDefaultLookAndFeel (&LAF);
 
-        mainWindow = std::make_unique<MainWindow> ("Reach", handList);
+        mainWindow = std::make_unique<MainWindow> ("Reach");
     }
 
     void shutdown() override
@@ -59,7 +56,7 @@ public:
     class MainWindow : public DocumentWindow
     {
     public:
-        MainWindow(StringRef name, Leap::HandList& handList) : DocumentWindow (name,
+        MainWindow(StringRef name) : DocumentWindow (name,
                                                                                Desktop::getInstance()
                                                                                .getDefaultLookAndFeel()
                                                                                .findColour (
@@ -68,7 +65,7 @@ public:
         {
             setResizable (true, true);
             setUsingNativeTitleBar (true);
-            setContentOwned (new MainContentComponent (handList), true);
+            setContentOwned (new MainContentComponent (), true);
 
             centreWithSize (getWidth(), getHeight());
             setVisible (true);
@@ -85,7 +82,6 @@ public:
 
 private:
     Leap::Controller controller;
-    Leap::HandList handList;
     LeapListener leapListener;
 
     std::unique_ptr<MainWindow> mainWindow;

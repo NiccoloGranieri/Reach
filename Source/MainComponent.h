@@ -11,7 +11,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "Leap.h"
+#include "LeapHands.h"
 
 class MainContentComponent   : public Component,
 	                           public Timer,
@@ -19,7 +19,7 @@ class MainContentComponent   : public Component,
 {
 public:
     //==============================================================================
-    MainContentComponent (Leap::HandList& hl);
+    MainContentComponent ();
     ~MainContentComponent();
 
     void paint (Graphics&) override;
@@ -27,7 +27,7 @@ public:
 
 private:
 	//==============================================================================
-	Leap::HandList& handList;
+	SharedResourcePointer<LeapHands> hands;
 
     //==============================================================================
 	bool leftLed = false;

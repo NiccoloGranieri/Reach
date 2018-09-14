@@ -6,6 +6,7 @@
               companyName="Integra Lab" reportAppUsage="0" headerPath="../../JuceLibraryCode/&#10;../../LeapSDK/include">
   <MAINGROUP id="dja4JP" name="Reach">
     <GROUP id="{16C39C49-29A4-5EA4-64BB-9F3BADD97C81}" name="Source">
+      <FILE id="VtLJ8g" name="LeapHands.h" compile="0" resource="0" file="Source/LeapHands.h"/>
       <FILE id="I4sx1e" name="LeapListener.cpp" compile="1" resource="0"
             file="Source/LeapListener.cpp"/>
       <FILE id="wLKUyT" name="LeapListener.h" compile="0" resource="0" file="Source/LeapListener.h"/>

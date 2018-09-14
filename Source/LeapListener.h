@@ -10,8 +10,8 @@
 
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
 #include "Leap.h"
+#include "LeapHands.h"
 
 //==============================================================================
 /*
@@ -19,15 +19,14 @@
 class LeapListener : public Leap::Listener
 {
 public:
-	LeapListener (Leap::HandList&);
+	LeapListener ();
 	~LeapListener();
 
 	void onConnect(const Leap::Controller&) override;
 	void onFrame(const Leap::Controller&) override;
 
 private:
-
-	Leap::HandList& handList;
+	SharedResourcePointer<LeapHands> handsArray;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (LeapListener)
 };
