@@ -33,7 +33,7 @@ public:
         LookAndFeel::setDefaultLookAndFeel (&LAF);
 
 		mainWindow = std::make_unique<MainWindow>("Reach");
-		const auto logFilename = String(getApplicationName() + "_LOG_" + Time::getCurrentTime().formatted("%d-%m-%Y_%H-%M-%S"));
+		const auto logFilename = String(getApplicationName() + "_Log_" + Time::getCurrentTime().formatted("%d-%m-%Y_%H-%M-%S"));
 		const auto logExtension = String(".csv");
 
 		auto logFile = File::getSpecialLocation (File::SpecialLocationType::userDesktopDirectory)
