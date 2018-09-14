@@ -89,6 +89,10 @@ void MainContentComponent::timerCallback()
 		return;
 
 	const auto& frame = controller.frame();
+
+	if (frame.id() == lastFrameId)
+		return;
+
 	const auto& hands = frame.hands();
 
 	leftLed = false;
@@ -143,6 +147,8 @@ void MainContentComponent::timerCallback()
 	OSCMessage presenceR = OSCMessage("/Right/presence");
 	presenceR.addInt32(rightLed);
 	sender.send(presenceR);
+
+	lastFrameId = frame.id();
 
 	repaint();
 }
