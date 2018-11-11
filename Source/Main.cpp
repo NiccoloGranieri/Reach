@@ -11,7 +11,9 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "ReachLookAndFeel.h"
 #include "MainComponent.h"
-#include "LeapLogger.h"
+
+// Commented out logging feature to avoid filling Desktop with log files.
+// #include "LeapLogger.h"
 
 //==============================================================================
 class ReachApplication : public JUCEApplication
@@ -39,7 +41,8 @@ public:
     {
         mainWindow = nullptr;
 
-		Logger::setCurrentLogger(nullptr);
+		// Commented out logger
+		// Logger::setCurrentLogger(nullptr);
     }
 
     //==============================================================================
@@ -78,7 +81,9 @@ public:
 private:
 
     std::unique_ptr<MainWindow> mainWindow;
-	LeapLogger logger;
+	
+	// Commented out logger
+	// LeapLogger logger;
 
     ReachLookAndFeel LAF;
 };

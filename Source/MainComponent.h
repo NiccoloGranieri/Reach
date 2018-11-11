@@ -3,7 +3,7 @@
 
   MainComponent.h
   Created: 18 Jan 2018 2:04:28pm
-  Author:  Niccolò
+  Author:  NiccolÃ²
 
   ==============================================================================
 */

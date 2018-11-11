@@ -3,7 +3,7 @@
 
   MainComponent.cpp
   Created: 18 Jan 2018 2:04:28pm
-  Author:  Niccolò
+  Author:  NiccolÃ²
 
   ==============================================================================
 */
@@ -125,6 +125,18 @@ void MainContentComponent::timerCallback()
 		oscWrist.addFloat32(hand.wristPosition().y);
 		oscWrist.addFloat32(hand.wristPosition().z);
 		sender.send(oscWrist);
+
+		OSCMessage oscGrab = OSCMessage(handedness + "/grab");
+		oscGrab.addFloat32(hand.grabAngle());
+		sender.send(oscGrab);
+
+		OSCMessage oscRotation = OSCMessage(handedness + "/rotation");
+		oscRotation.addFloat32(hand.palmNormal().x);
+		oscRotation.addFloat32(hand.palmNormal().y);
+		oscRotation.addFloat32(hand.palmNormal().z);
+		sender.send(oscRotation);
+
+
 
 		for (auto& finger : hand.fingers())
 		{
