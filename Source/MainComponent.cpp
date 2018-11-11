@@ -9,15 +9,11 @@
 */
 
 #include "MainComponent.h"
-#include "Leap.h"
 
 //==============================================================================
-MainContentComponent::MainContentComponent()
+MainContentComponent::MainContentComponent ()
 {
-	Component::setBoundsRelative(0.025f, 0.025f, 0.15f, 0.15f);
-
-	leapListener = new LeapListener (handList);
-	controller.addListener (*leapListener);
+	setBoundsRelative(0.025f, 0.025f, 0.15f, 0.15f);
 
 	sender.connect (senderIP, senderPort);
 
@@ -44,10 +40,7 @@ MainContentComponent::MainContentComponent()
 	throttleSpeed.setText((String)throttleTime, dontSendNotification);
 }
 
-MainContentComponent::~MainContentComponent()
-{
-	controller.removeListener (*leapListener);
-}
+MainContentComponent::~MainContentComponent() = default;
 
 void MainContentComponent::paint (Graphics& g)
 {
@@ -77,13 +70,12 @@ void MainContentComponent::paint (Graphics& g)
 
 void MainContentComponent::resized()
 {
-
 	auto area = getLocalBounds().reduced(proportionOfWidth(0.03), proportionOfHeight(0.03));
 	area.removeFromTop(proportionOfHeight(0.2));
 	auto labelarea = area.removeFromTop(proportionOfHeight(0.425));
 	auto labelarea1 = labelarea.removeFromBottom(proportionOfHeight(0.2));
 	auto spacearea = labelarea.removeFromBottom(proportionOfHeight(0.025));
-	
+
 	ipAddress.setBounds(labelarea.removeFromLeft(proportionOfWidth(0.4)));
 	port.setBounds(labelarea.removeFromRight(proportionOfWidth(0.4)));
 
@@ -93,15 +85,22 @@ void MainContentComponent::resized()
 
 void MainContentComponent::timerCallback()
 {
+	if (! controller.isConnected())
+		return;
+
+	const auto& frame = controller.frame();
+
+	if (frame.id() == lastFrameId)
+		return;
+
+	const auto& hands = frame.hands();
+
 	leftLed = false;
 	rightLed = false;
 
-	for (auto& hand : handList)
+	for (auto& hand : hands)
 	{
 		String handedness;
-
-		char colour[5][13] = { "/TYPE_THUMB", "/TYPE_INDEX", "/TYPE_MIDDLE", "/TYPE_RING", "/TYPE_PINKY"};
-		char joint[4][9] = { "/knuckle", "/joint1", "/joint2", "/joint3"};
 
 		if (hand.isLeft())
 		{
@@ -133,11 +132,10 @@ void MainContentComponent::timerCallback()
 			{
 				auto boneType = static_cast<Leap::Bone::Type>(i);
 				auto bone = finger.bone(boneType);
-				OSCMessage oscJoint = OSCMessage(handedness + colour[finger.type()] + joint[i]);
+				OSCMessage oscJoint = OSCMessage(String(handedness + jointTypes[finger.type()] + joints[i]));
 				oscJoint.addFloat32(bone.nextJoint().x);
 				oscJoint.addFloat32(bone.nextJoint().y);
 				oscJoint.addFloat32(bone.nextJoint().z);
-				sender.send(oscJoint);
 			}
 		}
 	}
@@ -149,6 +147,8 @@ void MainContentComponent::timerCallback()
 	OSCMessage presenceR = OSCMessage("/Right/presence");
 	presenceR.addInt32(rightLed);
 	sender.send(presenceR);
+
+	lastFrameId = frame.id();
 
 	repaint();
 }

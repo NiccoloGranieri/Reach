@@ -10,28 +10,27 @@
 
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "JuceHeader.h"
 #include "Leap.h"
-#include "LeapListener.h"
 
-class MainContentComponent   : public Component, 
+class MainContentComponent   : public Component,
 	                           public Timer,
 	                           public Label::Listener
 {
 public:
     //==============================================================================
-    MainContentComponent();
+    MainContentComponent ();
     ~MainContentComponent();
 
     void paint (Graphics&) override;
     void resized() override;
 
 private:
-    //==============================================================================
+	//==============================================================================
 	Leap::Controller controller;
-	ScopedPointer<LeapListener> leapListener;
-	Leap::HandList handList;
+	int lastFrameId = -1;
 
+    //==============================================================================
 	bool leftLed = false;
 	bool rightLed = false;
 
@@ -55,6 +54,10 @@ private:
 	int throttleTime = 200;
 
 	void labelTextChanged(Label* labelThatHasChanged) override;
+
+    //==============================================================================
+    const StringArray jointTypes = { "/TYPE_THUMB", "/TYPE_INDEX", "/TYPE_MIDDLE", "/TYPE_RING", "/TYPE_PINKY"};
+    const StringArray joints = { "/knuckle", "/joint1", "/joint2", "/joint3"};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

@@ -3,38 +3,43 @@
 
   Main.cpp
   Created: 18 Jan 2018 2:04:28pm
-  Author:  Niccolò
+  Author:  NiccolÃ²
 
   ==============================================================================
 */
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MainComponent.h"
 #include "ReachLookAndFeel.h"
+#include "MainComponent.h"
+#include "LeapLogger.h"
 
 //==============================================================================
-class ReachApplication  : public JUCEApplication
+class ReachApplication : public JUCEApplication
 {
 public:
     //==============================================================================
-    ReachApplication() {}
-	~ReachApplication() {}
+	ReachApplication() = default;
+    ~ReachApplication() = default;
 
-    const String getApplicationName() override       { return ProjectInfo::projectName; }
-    const String getApplicationVersion() override    { return ProjectInfo::versionString; }
-    bool moreThanOneInstanceAllowed() override       { return true; }
+    const String getApplicationName() override { return ProjectInfo::projectName; }
+    const String getApplicationVersion() override { return ProjectInfo::versionString; }
+    bool moreThanOneInstanceAllowed() override { return true; }
 
     //==============================================================================
     void initialise (const String& commandLine) override
     {
-		LookAndFeel::setDefaultLookAndFeel(&LAF);
-		
-        mainWindow = new MainWindow ("Reach");
+        ignoreUnused (commandLine);
+
+        LookAndFeel::setDefaultLookAndFeel (&LAF);
+
+		mainWindow = std::make_unique<MainWindow>("Reach");
     }
 
     void shutdown() override
     {
         mainWindow = nullptr;
+
+		Logger::setCurrentLogger(nullptr);
     }
 
     //==============================================================================
@@ -43,21 +48,19 @@ public:
         quit();
     }
 
-    void anotherInstanceStarted (const String& commandLine) override
-    {
-    }
+    void anotherInstanceStarted(const String& commandLine) override
+    { }
 
-    class MainWindow    : public DocumentWindow
+    class MainWindow : public DocumentWindow
     {
     public:
-        MainWindow (String name)  : DocumentWindow (name,
-                                                    Desktop::getInstance().getDefaultLookAndFeel()
-                                                                          .findColour (ResizableWindow::backgroundColourId),
-                                                    DocumentWindow::allButtons)
+        MainWindow(StringRef name) : DocumentWindow (name, Desktop::getInstance().getDefaultLookAndFeel()
+                                                                                 .findColour (ResizableWindow::backgroundColourId),
+                                                                                              DocumentWindow::allButtons)
         {
-			setResizable(true, true);
+            setResizable (true, true);
             setUsingNativeTitleBar (true);
-            setContentOwned (new MainContentComponent(), true);
+            setContentOwned (new MainContentComponent (), true);
 
             centreWithSize (getWidth(), getHeight());
             setVisible (true);
@@ -73,9 +76,11 @@ public:
     };
 
 private:
-    ScopedPointer<MainWindow> mainWindow;
 
-	ReachLookAndFeel LAF;
+    std::unique_ptr<MainWindow> mainWindow;
+	LeapLogger logger;
+
+    ReachLookAndFeel LAF;
 };
 
 //==============================================================================

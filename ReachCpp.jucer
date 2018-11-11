@@ -3,16 +3,15 @@
 <JUCERPROJECT id="Oi0NjZ" name="Reach" splashScreenColour="Dark" projectType="guiapp"
               version="0.1.2" bundleIdentifier="com.IntegraLab.Reach" includeBinaryInAppConfig="1"
               cppLanguageStandard="11" companyCopyright="Integra Lab" jucerVersion="5.3.2"
-              companyName="Integra Lab" reportAppUsage="0">
+              companyName="Integra Lab" reportAppUsage="0" headerPath="../../JuceLibraryCode/&#10;../../LeapSDK/include">
   <MAINGROUP id="dja4JP" name="Reach">
     <GROUP id="{16C39C49-29A4-5EA4-64BB-9F3BADD97C81}" name="Source">
-      <FILE id="I4sx1e" name="LeapListener.cpp" compile="1" resource="0"
-            file="Source/LeapListener.cpp"/>
-      <FILE id="wLKUyT" name="LeapListener.h" compile="0" resource="0" file="Source/LeapListener.h"/>
+      <FILE id="NHEBTx" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="IZnqVN" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="GGE5g8" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
-      <FILE id="NHEBTx" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="wGdwsV" name="LeapLogger.cpp" compile="1" resource="0" file="Source/LeapLogger.cpp"/>
+      <FILE id="sgHzeb" name="LeapLogger.h" compile="0" resource="0" file="Source/LeapLogger.h"/>
       <FILE id="WpyIkB" name="ReachLookAndFeel.cpp" compile="1" resource="0"
             file="Source/ReachLookAndFeel.cpp"/>
       <FILE id="Thbeho" name="ReachLookAndFeel.h" compile="0" resource="0"
@@ -29,35 +28,34 @@
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
                        linkTimeOptimisation="0" isDebug="1" optimisation="1" targetName="Reach"
-                       headerPath="..\..\LeapSDK\include" libraryPath="..\..\LeapSDK\lib\x64&#10;"
-                       postbuildCommand="COPY &quot;..\..\LeapSDK\lib\x64\Leap.dll&quot; &quot;$(OutDir)&quot;"/>
+                       libraryPath="..\..\LeapSDK\lib\x64&#10;" postbuildCommand="COPY &quot;..\..\LeapSDK\lib\x64\Leap.dll&quot; &quot;$(OutDir)&quot;"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
                        linkTimeOptimisation="1" isDebug="0" optimisation="3" targetName="Reach"
                        postbuildCommand="COPY &quot;..\..\LeapSDK\lib\x64\Leap.dll&quot; &quot;$(OutDir)&quot;"
-                       headerPath="..\..\LeapSDK\include" defines="" libraryPath="..\..\LeapSDK\lib\x64&#10;"/>
+                       defines="" libraryPath="..\..\LeapSDK\lib\x64&#10;"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../../../JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../../../JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../../../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../../../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../../../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../../../JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="../../../../JUCE/modules"/>
-        <MODULEPATH id="juce_osc" path="C:/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="JUCE/modules"/>
+        <MODULEPATH id="juce_osc" path="JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
   </EXPORTFORMATS>
   <MODULES>
-    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_WEB_BROWSER="0" JUCE_ENABLE_LIVE_CONSTANT_EDITOR="0"/>
   <LIVE_SETTINGS>
