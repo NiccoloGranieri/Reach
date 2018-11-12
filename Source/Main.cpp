@@ -81,7 +81,7 @@ public:
 private:
 
     std::unique_ptr<MainWindow> mainWindow;
-	
+
 	// Commented out logger
 	// LeapLogger logger;
 
