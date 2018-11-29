@@ -3,7 +3,7 @@
 Reach is a free and open source application, written using [JUCE](https://juce.com), to map [Leap Motion](https://leapmotion.com) data to OSC messages. Using the latest Leap Motion SDK [Orion](https://developer.leapmotion.com/orion/) this app
 enables easy mapping of leap motion parameters in any other environment without having to code a single line.
 
-### [**Web Page**](http://niccologranieri.com/reach/) - [**DOWNLOAD**](https://sourceforge.net/projects/reach-app/files/)
+### [**Web Page**](http://niccologranieri.com/reach/) - [**DOWNLOAD**](https://github.com/NiccoloGranieri/Reach/releases)
 
 ## Key Features
 - Tracking and OSC parsing of hand nodes' spatial position (x, y, z), and grab hand gesture.
