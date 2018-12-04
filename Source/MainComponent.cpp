@@ -148,6 +148,7 @@ void MainContentComponent::timerCallback()
 				oscJoint.addFloat32(bone.nextJoint().x);
 				oscJoint.addFloat32(bone.nextJoint().y);
 				oscJoint.addFloat32(bone.nextJoint().z);
+				sender.send(oscJoint);
 			}
 		}
 	}
