@@ -140,6 +140,8 @@ void MainContentComponent::timerCallback()
 
 		for (auto& finger : hand.fingers())
 		{
+            sender.send ({ handedness + jointTypes[finger.type()] + "/extended", finger.isExtended() });
+            
 			for (auto i = 0; i <= 3; i++)
 			{
 				auto boneType = static_cast<Leap::Bone::Type>(i);
