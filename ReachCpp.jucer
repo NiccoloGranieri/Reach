@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="Oi0NjZ" name="Reach" splashScreenColour="Dark" projectType="guiapp"
-              version="0.2.1" bundleIdentifier="com.IntegraLab.Reach" includeBinaryInAppConfig="1"
-              cppLanguageStandard="11" companyCopyright="Integra Lab" jucerVersion="5.4.0"
+              version="1.0" bundleIdentifier="com.IntegraLab.Reach" includeBinaryInAppConfig="1"
+              cppLanguageStandard="11" companyCopyright="Integra Lab" jucerVersion="5.4.3"
               companyName="Integra Lab" reportAppUsage="0" headerPath="../../JuceLibraryCode/&#10;../../LeapSDK/include">
   <MAINGROUP id="dja4JP" name="Reach">
     <GROUP id="{16C39C49-29A4-5EA4-64BB-9F3BADD97C81}" name="Source">

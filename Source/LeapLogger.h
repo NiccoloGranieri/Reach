@@ -24,7 +24,7 @@ private:
 
 	//==========================================================================
 	Leap::Controller controller;
-	int lastFrameId = -1;
+	int64 lastFrameId = -1;
 
 	//==========================================================================
 	const StringArray jointTypes = { "/TYPE_THUMB", "/TYPE_INDEX", "/TYPE_MIDDLE", "/TYPE_RING", "/TYPE_PINKY" };

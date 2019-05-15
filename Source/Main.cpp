@@ -63,9 +63,9 @@ public:
         {
             setResizable (true, true);
             setUsingNativeTitleBar (true);
+			centreWithSize(getWidth(), getHeight());
             setContentOwned (new MainContentComponent (), true);
 
-            centreWithSize (getWidth(), getHeight());
             setVisible (true);
         }
 

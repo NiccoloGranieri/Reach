@@ -20,7 +20,7 @@ class MainContentComponent   : public Component,
 public:
     //==============================================================================
     MainContentComponent ();
-    ~MainContentComponent();
+	~MainContentComponent() = default;
 
     void paint (Graphics&) override;
     void resized() override;
@@ -28,7 +28,7 @@ public:
 private:
 	//==============================================================================
 	Leap::Controller controller;
-	int lastFrameId = -1;
+	int64 lastFrameId = -1;
 
     //==============================================================================
 	bool leftLed = false;
@@ -39,11 +39,17 @@ private:
 
 	//==============================================================================
 	void timerCallback() override;
+	void sendNormalisedValues(Leap::Hand hand, StringRef handedness);
+	void sendDenormalisedValues(Leap::Hand hand, StringRef handedness);
 
 	//==============================================================================
 	Label ipAddress;
 	Label port;
 	Label throttleSpeed;
+	Label normValueButtonLabel{ {}, "Normalised Values" };
+	ToggleButton normValueButton;
+	Label hmdButtonLabel{ {}, "Head Mounted" };
+	ToggleButton hmdButton;
 
 	//==============================================================================
 	String currentSizeAsString;
