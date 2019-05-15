@@ -42,7 +42,7 @@ void ReachLookAndFeel::drawLabel(Graphics& g, Label& label)
 
 		Rectangle<int> textArea(label.getBorderSize().subtractedFrom(label.getLocalBounds()));
 
-		g.drawFittedText(label.getText(), textArea, Justification::centred,
+		g.drawFittedText(label.getText(), textArea, label.getJustificationType(),
 			jmax(1, (int)(textArea.getHeight() / font.getHeight())),
 			label.getMinimumHorizontalScale());
 

@@ -13,15 +13,27 @@
 //==============================================================================
 MainContentComponent::MainContentComponent ()
 {
-	setBoundsRelative(0.025f, 0.025f, 0.15f, 0.15f);
+	setBoundsRelative(0.025f, 0.025f, 0.25f, 0.25f);
 
 	sender.connect (senderIP, senderPort);
 
 	startTimer(throttleTime);
 
 	addAndMakeVisible(ipAddress);
+	ipAddress.setJustificationType(Justification::centred);
 	addAndMakeVisible(port);
+	port.setJustificationType(Justification::centred);
 	addAndMakeVisible(throttleSpeed);
+	throttleSpeed.setJustificationType(Justification::centred);
+	addAndMakeVisible(normValueButton);
+	addAndMakeVisible(normValueButtonLabel);
+	normValueButtonLabel.attachToComponent(&normValueButton, true);
+	normValueButtonLabel.setColour(Label::backgroundColourId, Colours::transparentBlack);
+	normValueButtonLabel.setColour(Label::textColourId, Colours::white);
+	addAndMakeVisible(hmdButton);
+	addAndMakeVisible(hmdButtonLabel);
+	hmdButtonLabel.setColour(Label::backgroundColourId, Colours::transparentBlack);
+	hmdButtonLabel.setColour(Label::textColourId, Colours::white);
 
 	ipAddress.addListener(this);
 	port.addListener(this);
@@ -38,9 +50,11 @@ MainContentComponent::MainContentComponent ()
 	throttleSpeed.setFont(Font(22.0f));
 	throttleSpeed.setEditable(true);
 	throttleSpeed.setText((String)throttleTime, dontSendNotification);
-}
 
-MainContentComponent::~MainContentComponent() = default;
+	hmdButton.onStateChange = [this] {controller.setPolicy(hmdButton.getToggleState() ? Leap::Controller::POLICY_OPTIMIZE_HMD 
+																					  : Leap::Controller::POLICY_DEFAULT); };
+
+}
 
 void MainContentComponent::paint (Graphics& g)
 {
@@ -81,6 +95,10 @@ void MainContentComponent::resized()
 
 	labelarea1.removeFromRight(proportionOfWidth(0.27));
 	throttleSpeed.setBounds(labelarea1.removeFromRight(proportionOfWidth(0.4)));
+
+	normValueButton.setBounds(area.removeFromRight(23).reduced(0, proportionOfHeight(0.08)));
+	hmdButton.setBounds(area.removeFromLeft(23).reduced(0, proportionOfHeight(0.08)));
+	hmdButtonLabel.setBounds(area.removeFromLeft(proportionOfWidth(0.3)));
 }
 
 void MainContentComponent::timerCallback()
@@ -114,44 +132,12 @@ void MainContentComponent::timerCallback()
 			handedness = "/Right";
 		}
 
-		OSCMessage oscPalm = OSCMessage(handedness + "/palm");
-		oscPalm.addFloat32(hand.stabilizedPalmPosition().x);
-		oscPalm.addFloat32(hand.stabilizedPalmPosition().y);
-		oscPalm.addFloat32(hand.stabilizedPalmPosition().z);
-		sender.send(oscPalm);
+		normValueButton.getToggleState() ? sendNormalisedValues(hand, handedness) : sendDenormalisedValues(hand, handedness);
 
-		OSCMessage oscWrist = OSCMessage(handedness + "/wrist");
-		oscWrist.addFloat32(hand.wristPosition().x);
-		oscWrist.addFloat32(hand.wristPosition().y);
-		oscWrist.addFloat32(hand.wristPosition().z);
-		sender.send(oscWrist);
 
 		OSCMessage oscGrab = OSCMessage(handedness + "/grab");
 		oscGrab.addFloat32(hand.grabAngle());
 		sender.send(oscGrab);
-
-		OSCMessage oscRotation = OSCMessage(handedness + "/rotation");
-		oscRotation.addFloat32(hand.palmNormal().x);
-		oscRotation.addFloat32(hand.palmNormal().y);
-		oscRotation.addFloat32(hand.palmNormal().z);
-		sender.send(oscRotation);
-
-
-
-		for (auto& finger : hand.fingers())
-		{
-            sender.send ({ handedness + jointTypes[finger.type()] + "/extended", finger.isExtended() });
-            
-			for (auto i = 0; i <= 3; i++)
-			{
-				auto boneType = static_cast<Leap::Bone::Type>(i);
-				auto bone = finger.bone(boneType);
-				OSCMessage oscJoint = OSCMessage(String(handedness + jointTypes[finger.type()] + joints[i]));
-				oscJoint.addFloat32(bone.nextJoint().x);
-				oscJoint.addFloat32(bone.nextJoint().y);
-				oscJoint.addFloat32(bone.nextJoint().z);
-			}
-		}
 	}
 
 	OSCMessage presenceL = OSCMessage("/Left/presence");
@@ -183,5 +169,90 @@ void MainContentComponent::labelTextChanged(Label* labelThatHasChanged)
 	{
 		throttleTime = (int)labelThatHasChanged->getText().getIntValue();
 		startTimer(throttleTime);
+	}
+}
+
+void MainContentComponent::sendDenormalisedValues(Leap::Hand hand, StringRef handedness)
+{
+	OSCMessage oscPalm = OSCMessage(handedness + "/palm");
+	oscPalm.addFloat32(hand.stabilizedPalmPosition().x);
+	oscPalm.addFloat32(hand.stabilizedPalmPosition().y);
+	oscPalm.addFloat32(hand.stabilizedPalmPosition().z);
+	sender.send(oscPalm);
+
+	OSCMessage oscWrist = OSCMessage(handedness + "/wrist");
+	oscWrist.addFloat32(hand.wristPosition().x);
+	oscWrist.addFloat32(hand.wristPosition().y);
+	oscWrist.addFloat32(hand.wristPosition().z);
+	sender.send(oscWrist);
+
+	OSCMessage oscRotation = OSCMessage(handedness + "/rotation");
+	oscRotation.addFloat32(hand.palmNormal().x);
+	oscRotation.addFloat32(hand.palmNormal().y);
+	oscRotation.addFloat32(hand.palmNormal().z);
+	sender.send(oscRotation);
+
+
+
+	for (auto& finger : hand.fingers())
+	{
+		sender.send({ handedness + jointTypes[finger.type()] + "/extended", finger.isExtended() });
+
+		for (auto i = 0; i <= 3; i++)
+		{
+			auto boneType = static_cast<Leap::Bone::Type>(i);
+			auto bone = finger.bone(boneType);
+			OSCMessage oscJoint = OSCMessage(String(handedness + jointTypes[finger.type()] + joints[i]));
+			oscJoint.addFloat32(bone.nextJoint().x);
+			oscJoint.addFloat32(bone.nextJoint().y);
+			oscJoint.addFloat32(bone.nextJoint().z);
+			sender.send(oscJoint);
+		}
+	}
+}
+
+void MainContentComponent::sendNormalisedValues(Leap::Hand hand, StringRef handedness)
+{
+	auto normPalmPos = hand.stabilizedPalmPosition().normalized();
+
+	OSCMessage oscPalm = OSCMessage(handedness + "/palm");
+	oscPalm.addFloat32(normPalmPos.x);
+	oscPalm.addFloat32(normPalmPos.y);
+	oscPalm.addFloat32(normPalmPos.z);
+	sender.send(oscPalm);
+
+	auto normWristPos = hand.wristPosition().normalized();
+
+	OSCMessage oscWrist = OSCMessage(handedness + "/wrist");
+	oscWrist.addFloat32(normWristPos.x);
+	oscWrist.addFloat32(normWristPos.y);
+	oscWrist.addFloat32(normWristPos.z);
+	sender.send(oscWrist);
+
+	auto normRotation = hand.palmNormal().normalized();
+
+	OSCMessage oscRotation = OSCMessage(handedness + "/rotation");
+	oscRotation.addFloat32(normRotation.x);
+	oscRotation.addFloat32(normRotation.y);
+	oscRotation.addFloat32(normRotation.z);
+	sender.send(oscRotation);
+
+	for (auto& finger : hand.fingers())
+	{
+		sender.send({ handedness + jointTypes[finger.type()] + "/extended", finger.isExtended() });
+
+		for (auto i = 0; i <= 3; i++)
+		{
+			auto boneType = static_cast<Leap::Bone::Type>(i);
+			auto bone = finger.bone(boneType);
+
+			auto normJointPos = bone.nextJoint().normalized();
+
+			OSCMessage oscJoint = OSCMessage(String(handedness + jointTypes[finger.type()] + joints[i]));
+			oscJoint.addFloat32(normJointPos.x);
+			oscJoint.addFloat32(normJointPos.y);
+			oscJoint.addFloat32(normJointPos.z);
+			sender.send(oscJoint);
+		}
 	}
 }
