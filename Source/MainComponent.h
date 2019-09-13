@@ -43,6 +43,10 @@ private:
 	void sendDenormalisedValues(Leap::Hand hand, StringRef handedness);
 
 	//==============================================================================
+	NormalisableRange<float> xnzAxisRange{ -750.0f, 750.0f, 0.00001f };
+	NormalisableRange<float> yAxisRange{ 0.0f, 750.0f, 0.00001f };
+
+	//==============================================================================
 	Label ipAddress;
 	Label port;
 	Label throttleSpeed;

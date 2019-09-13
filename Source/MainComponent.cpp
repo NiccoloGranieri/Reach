@@ -11,6 +11,19 @@
 #include "MainComponent.h"
 
 //==============================================================================
+const float grabAndJNormalise(float value, const NormalisableRange<float>& range)
+{
+	const auto normalisedValue = range.convertTo0to1(value);
+	return jmap(normalisedValue, -1.0f, 1.0f);
+}
+
+const float grabAndNormalise(float value, const NormalisableRange<float>& range)
+{
+	const auto normalisedValue = range.convertTo0to1(value);
+	return normalisedValue;
+}
+
+//==============================================================================
 MainContentComponent::MainContentComponent ()
 {
 	setBoundsRelative(0.025f, 0.025f, 0.25f, 0.25f);
@@ -213,28 +226,29 @@ void MainContentComponent::sendDenormalisedValues(Leap::Hand hand, StringRef han
 
 void MainContentComponent::sendNormalisedValues(Leap::Hand hand, StringRef handedness)
 {
-	auto normPalmPos = hand.stabilizedPalmPosition().normalized();
+	auto palmPosition = hand.stabilizedPalmPosition();
 
 	OSCMessage oscPalm = OSCMessage(handedness + "/palm");
-	oscPalm.addFloat32(normPalmPos.x);
-	oscPalm.addFloat32(normPalmPos.y);
-	oscPalm.addFloat32(normPalmPos.z);
+	oscPalm.addFloat32(grabAndJNormalise(palmPosition.x, xnzAxisRange));
+	oscPalm.addFloat32(grabAndNormalise(palmPosition.y, yAxisRange));
+	oscPalm.addFloat32(grabAndJNormalise(palmPosition.z, xnzAxisRange));
 	sender.send(oscPalm);
 
-	auto normWristPos = hand.wristPosition().normalized();
+	auto wristPosition = hand.wristPosition();
 
 	OSCMessage oscWrist = OSCMessage(handedness + "/wrist");
-	oscWrist.addFloat32(normWristPos.x);
-	oscWrist.addFloat32(normWristPos.y);
-	oscWrist.addFloat32(normWristPos.z);
+	oscWrist.addFloat32(grabAndJNormalise(wristPosition.x, xnzAxisRange));
+	oscWrist.addFloat32(grabAndNormalise(wristPosition.y, yAxisRange));
+	oscWrist.addFloat32(grabAndJNormalise(wristPosition.z, xnzAxisRange));
 	sender.send(oscWrist);
 
-	auto normRotation = hand.palmNormal().normalized();
+	auto palmRotation = hand.palmNormal();
 
 	OSCMessage oscRotation = OSCMessage(handedness + "/rotation");
-	oscRotation.addFloat32(normRotation.x);
-	oscRotation.addFloat32(normRotation.y);
-	oscRotation.addFloat32(normRotation.z);
+
+	oscRotation.addFloat32(palmPosition.x);
+	oscRotation.addFloat32(palmRotation.y);
+	oscRotation.addFloat32(palmRotation.z);
 	sender.send(oscRotation);
 
 	for (auto& finger : hand.fingers())
@@ -246,12 +260,12 @@ void MainContentComponent::sendNormalisedValues(Leap::Hand hand, StringRef hande
 			auto boneType = static_cast<Leap::Bone::Type>(i);
 			auto bone = finger.bone(boneType);
 
-			auto normJointPos = bone.nextJoint().normalized();
+			auto jointPosition = bone.nextJoint();
 
 			OSCMessage oscJoint = OSCMessage(String(handedness + jointTypes[finger.type()] + joints[i]));
-			oscJoint.addFloat32(normJointPos.x);
-			oscJoint.addFloat32(normJointPos.y);
-			oscJoint.addFloat32(normJointPos.z);
+			oscJoint.addFloat32(grabAndJNormalise(jointPosition.x, xnzAxisRange));
+			oscJoint.addFloat32(grabAndNormalise(jointPosition.y, yAxisRange));
+			oscJoint.addFloat32(grabAndJNormalise(jointPosition.z, xnzAxisRange));
 			sender.send(oscJoint);
 		}
 	}
