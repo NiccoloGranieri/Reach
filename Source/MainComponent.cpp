@@ -246,7 +246,7 @@ void MainContentComponent::sendNormalisedValues(Leap::Hand hand, StringRef hande
 
 	OSCMessage oscRotation = OSCMessage(handedness + "/rotation");
 
-	oscRotation.addFloat32(palmPosition.x);
+	oscRotation.addFloat32(palmRotation.x);
 	oscRotation.addFloat32(palmRotation.y);
 	oscRotation.addFloat32(palmRotation.z);
 	sender.send(oscRotation);
