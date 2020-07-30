@@ -64,19 +64,34 @@ body {
     font-size: 1.2em;
 }
 
+#page-hero {
+    min-height: 100vh;
+}
+
 #page-features {
     background: var(--reach-blue);
     color: white;
+    min-height: 100vh;
+}
+
+#page-osc{
+    min-height: 100vh;
 }
 
 #page-oss {
     background: var(--reach-blue);
     color: white;
+    min-height: 100vh;
+}
+
+#page-projects {
+    min-height: 100vh;
 }
 
 #page-links {
     background: var(--reach-blue);
     color: white;
+    min-height: 100vh
 }
 
 .page-section-header .page-section-text {
