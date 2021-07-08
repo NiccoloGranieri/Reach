@@ -14,5 +14,5 @@ enables easy mapping of leap motion parameters in any other environment without 
 Reach is a software supported by [Integra Lab](http://integra.io).
 
 ### Team:
-- [Niccolò Granieri](http://niccologranieri.com), creator
-- [Jefferson Bledsoe](https://twitter.com/Jeff_Bledsoe), developer
+- [Niccolò Granieri](http://niccologranieri.com), creator, developer
+- [Jefferson Bledsoe](https://jeffersonbledsoe.com), developer
